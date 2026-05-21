@@ -31,7 +31,7 @@ var MODIFICATIONS = {
     "latest": new Modification("Latest", "latest.json", false, [1024, 1024]),
 }
 
-var DEFAULT_MODIFICATION = "0.6.0.22572"
+var DEFAULT_MODIFICATION = "latest"
 
 function addOverrideOptions(version) {
     var tag = "local-" + version.replace(/\./g, "-")
@@ -190,20 +190,24 @@ var DEFAULT_MINIMUM = "3"
 
 var minimumAssembler = DEFAULT_MINIMUM
 
+function getMinimumAssemblers() {
+    return spec.factories["assembler"].filter(factory => factory.name !== "_base_transport_drone_i")
+}
+
 function renderMinimumAssembler(settings) {
     var min = DEFAULT_MINIMUM
     // Backward compatibility.
     if ("use_3" in settings && settings.use_3 == "true") {
         min = "3"
     }
-    var assemblers = spec.factories["assembler"]
+    var assemblers = getMinimumAssemblers()
     if ("min" in settings) {
         min = settings.min
         if (Number(settings.min) > assemblers.length) {
             min = assemblers.length
         }
     }
-    setMinimumAssembler(min)
+    setMinimumAssembler(min, assemblers)
     var oldNode = document.getElementById("minimum_assembler")
     var cell = oldNode.parentNode
     var node = document.createElement("span")
@@ -220,23 +224,46 @@ function renderMinimumAssembler(settings) {
     cell.replaceChild(node, oldNode)
 }
 
-function setMinimumAssembler(min) {
-    spec.setMinimum(min)
-    minimumAssembler = min
+function setMinimumAssembler(min, assemblers) {
+    if (!assemblers) {
+        assemblers = getMinimumAssemblers()
+    }
+    if (assemblers.length === 0) {
+        spec.setMinimum("1")
+        minimumAssembler = "1"
+        return
+    }
+    var minIndex = Number(min) - 1
+    if (minIndex < 0) {
+        minIndex = 0
+    } else if (minIndex >= assemblers.length) {
+        minIndex = assemblers.length - 1
+    }
+    var selectedFactory = assemblers[minIndex]
+    var allAssemblers = spec.factories["assembler"]
+    var selectedIndex = allAssemblers.findIndex(factory => factory.name === selectedFactory.name)
+    if (selectedIndex < 0) {
+        selectedIndex = 0
+    }
+    spec.setMinimum(String(selectedIndex + 1))
+    minimumAssembler = String(minIndex + 1)
 }
 
 // crusher
 
 // Assigned during FactorySpec initialization.
-var DEFAULT_CRUSHER = 'Crusher II'
+var DEFAULT_CRUSHER = null
 
 function renderCrusher(settings) {
-    var crusherName = DEFAULT_CRUSHER
+    var crusherName = spec.crusher.name
     if ("crusher" in settings) {
         crusherName = settings.crusher
+    } else if (DEFAULT_CRUSHER !== null) {
+        crusherName = DEFAULT_CRUSHER
     }
     if (crusherName !== spec.crusher.name) {
         spec.setCrusher(crusherName)
+        crusherName = spec.crusher.name
     }
     var oldNode = document.getElementById("crusher")
     var cell = oldNode.parentNode
@@ -258,15 +285,18 @@ function renderCrusher(settings) {
 // smelter
 
 // Assigned during FactorySpec initialization.
-var DEFAULT_SMELTER = 'Advanced Smelter'
+var DEFAULT_SMELTER = null
 
 function renderSmelter(settings) {
-    var smelterName = DEFAULT_SMELTER
+    var smelterName = spec.smelter.name
     if ("smelter" in settings) {
         smelterName = settings.smelter
+    } else if (DEFAULT_SMELTER !== null) {
+        smelterName = DEFAULT_SMELTER
     }
     if (smelterName !== spec.smelter.name) {
         spec.setSmelter(smelterName)
+        smelterName = spec.smelter.name
     }
     var oldNode = document.getElementById("smelter")
     var cell = oldNode.parentNode

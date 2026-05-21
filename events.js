@@ -72,7 +72,9 @@ function searchTargets() {
             }
             currentHrHasContent = false
         } else {
-            let title = item.name.replace(/-/g, "")
+            let title = ((item.displayName || item.name) + " " + item.name)
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "")
             if (title.indexOf(search_text) === -1) {
                 this.style.display = "none"
             } else {
