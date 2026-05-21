@@ -229,6 +229,11 @@ function getRecipeGraph(data) {
     for (var entityName in data.resource) {
         var entity = data.resource[entityName]
         var category = entity.category
+        if (category === "ore") {
+            category = "mining_ore"
+        } else if (category === "fluid") {
+            category = "mining_fluid"
+        }
         if (!category) {
             category = "basic-solid"
         }
