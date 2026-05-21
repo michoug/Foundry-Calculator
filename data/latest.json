@@ -8378,6 +8378,10 @@
                 {
                     "amount": 1,
                     "name": "_base_barrel_empty"
+                },
+                {
+                    "amount": 250.0,
+                    "name": "_base_olumite"
                 }
             ],
             "localized_name": {
@@ -8446,7 +8450,16 @@
             "name": "_base_basic_refining_gas",
             "order": "a",
             "result": {},
-            "results": [],
+            "results": [
+                {
+                    "amount": 90.0,
+                    "name": "_base_olumite_gas"
+                },
+                {
+                    "amount": 10.0,
+                    "name": "_base_waste_gas"
+                }
+            ],
             "subgroup": "all",
             "type": "recipe"
         },
@@ -8471,7 +8484,16 @@
             "name": "_base_basic_refining_ldo",
             "order": "a",
             "result": {},
-            "results": [],
+            "results": [
+                {
+                    "amount": 100.0,
+                    "name": "_base_ldo"
+                },
+                {
+                    "amount": 25.0,
+                    "name": "_base_waste_gas"
+                }
+            ],
             "subgroup": "all",
             "type": "recipe"
         },
@@ -8496,7 +8518,16 @@
             "name": "_base_basic_refining_liquid_polymer",
             "order": "a",
             "result": {},
-            "results": [],
+            "results": [
+                {
+                    "amount": 75.0,
+                    "name": "_base_liquid_polymer"
+                },
+                {
+                    "amount": 50.0,
+                    "name": "_base_waste_gas"
+                }
+            ],
             "subgroup": "all",
             "type": "recipe"
         },
@@ -8597,6 +8628,10 @@
                 {
                     "amount": 1,
                     "name": "_base_ore_mineral_rock"
+                },
+                {
+                    "amount": 250.0,
+                    "name": "_base_water"
                 }
             ],
             "localized_name": {
@@ -9074,6 +9109,10 @@
                 {
                     "amount": 4,
                     "name": "_base_gravel"
+                },
+                {
+                    "amount": 20.0,
+                    "name": "_base_water"
                 }
             ],
             "localized_name": {
@@ -9724,6 +9763,10 @@
                 {
                     "amount": 2,
                     "name": "_base_polymer_board"
+                },
+                {
+                    "amount": 80.0,
+                    "name": "_base_olumic_acid"
                 }
             ],
             "localized_name": {
@@ -11116,6 +11159,10 @@
                 {
                     "amount": 6,
                     "name": "_base_glass"
+                },
+                {
+                    "amount": 60.0,
+                    "name": "_base_olumic_acid"
                 }
             ],
             "localized_name": {
@@ -11282,6 +11329,10 @@
                 {
                     "amount": 4,
                     "name": "_base_ignium_powder"
+                },
+                {
+                    "amount": 50.0,
+                    "name": "_base_ldo"
                 }
             ],
             "localized_name": {
@@ -11400,7 +11451,12 @@
             "name": "_base_fracking_liquid_i",
             "order": "a",
             "result": {},
-            "results": [],
+            "results": [
+                {
+                    "amount": 100.0,
+                    "name": "_base_fracking_liquid_i"
+                }
+            ],
             "subgroup": "all",
             "type": "recipe"
         },
@@ -11820,6 +11876,10 @@
                 {
                     "amount": 1,
                     "name": "_base_xf_steel_beams"
+                },
+                {
+                    "amount": 30.0,
+                    "name": "_base_ldo"
                 }
             ],
             "localized_name": {
@@ -11858,6 +11918,10 @@
                 {
                     "amount": 20,
                     "name": "_base_ignium_powder"
+                },
+                {
+                    "amount": 400.0,
+                    "name": "_base_liquid_fuel"
                 }
             ],
             "localized_name": {
@@ -11956,6 +12020,10 @@
                 {
                     "amount": 1,
                     "name": "_base_xenoferrite_plates"
+                },
+                {
+                    "amount": 30.0,
+                    "name": "_base_liquid_fuel"
                 }
             ],
             "localized_name": {
@@ -12282,7 +12350,12 @@
             "name": "_base_liquid_fuel",
             "order": "a",
             "result": {},
-            "results": [],
+            "results": [
+                {
+                    "amount": 150.0,
+                    "name": "_base_liquid_fuel"
+                }
+            ],
             "subgroup": "all",
             "type": "recipe"
         },
@@ -12307,7 +12380,12 @@
             "name": "_base_liquid_telluxite",
             "order": "a",
             "result": {},
-            "results": [],
+            "results": [
+                {
+                    "amount": 2000.0,
+                    "name": "_base_liquid_telluxite"
+                }
+            ],
             "subgroup": "all",
             "type": "recipe"
         },
@@ -13910,6 +13988,14 @@
                 {
                     "amount": 16,
                     "name": "_base_ignium_powder"
+                },
+                {
+                    "amount": 75.0,
+                    "name": "_base_olumite_gas"
+                },
+                {
+                    "amount": 25.0,
+                    "name": "_base_water"
                 }
             ],
             "localized_name": {
@@ -13918,7 +14004,12 @@
             "name": "_base_olumic_acid",
             "order": "a",
             "result": {},
-            "results": [],
+            "results": [
+                {
+                    "amount": 40.0,
+                    "name": "_base_olumic_acid"
+                }
+            ],
             "subgroup": "all",
             "type": "recipe"
         },
@@ -14185,7 +14276,12 @@
             "name": "_base_paint",
             "order": "a",
             "result": {},
-            "results": [],
+            "results": [
+                {
+                    "amount": 100.0,
+                    "name": "_base_paint"
+                }
+            ],
             "subgroup": "all",
             "type": "recipe"
         },
@@ -14418,6 +14514,10 @@
                 {
                     "amount": 1,
                     "name": "_base_barrel_empty"
+                },
+                {
+                    "amount": 30.0,
+                    "name": "_base_liquid_fuel"
                 }
             ],
             "localized_name": {
