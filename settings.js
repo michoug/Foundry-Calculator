@@ -190,20 +190,24 @@ var DEFAULT_MINIMUM = "3"
 
 var minimumAssembler = DEFAULT_MINIMUM
 
+function getMinimumAssemblers() {
+    return spec.factories["assembler"].filter(factory => factory.name !== "_base_transport_drone_i")
+}
+
 function renderMinimumAssembler(settings) {
     var min = DEFAULT_MINIMUM
     // Backward compatibility.
     if ("use_3" in settings && settings.use_3 == "true") {
         min = "3"
     }
-    var assemblers = spec.factories["assembler"]
+    var assemblers = getMinimumAssemblers()
     if ("min" in settings) {
         min = settings.min
         if (Number(settings.min) > assemblers.length) {
             min = assemblers.length
         }
     }
-    setMinimumAssembler(min)
+    setMinimumAssembler(min, assemblers)
     var oldNode = document.getElementById("minimum_assembler")
     var cell = oldNode.parentNode
     var node = document.createElement("span")
@@ -220,9 +224,29 @@ function renderMinimumAssembler(settings) {
     cell.replaceChild(node, oldNode)
 }
 
-function setMinimumAssembler(min) {
-    spec.setMinimum(min)
-    minimumAssembler = min
+function setMinimumAssembler(min, assemblers) {
+    if (!assemblers) {
+        assemblers = getMinimumAssemblers()
+    }
+    if (assemblers.length === 0) {
+        spec.setMinimum("1")
+        minimumAssembler = "1"
+        return
+    }
+    var minIndex = Number(min) - 1
+    if (minIndex < 0) {
+        minIndex = 0
+    } else if (minIndex >= assemblers.length) {
+        minIndex = assemblers.length - 1
+    }
+    var selectedFactory = assemblers[minIndex]
+    var allAssemblers = spec.factories["assembler"]
+    var selectedIndex = allAssemblers.findIndex(factory => factory.name === selectedFactory.name)
+    if (selectedIndex < 0) {
+        selectedIndex = 0
+    }
+    spec.setMinimum(String(selectedIndex + 1))
+    minimumAssembler = String(minIndex + 1)
 }
 
 // crusher
