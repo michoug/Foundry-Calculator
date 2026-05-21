@@ -264,7 +264,7 @@ function getRecipeGraph(data) {
             entity.localized_name.en,
             entity.icon_col,
             entity.icon_row,
-            "mining_" + category,
+            category,
             hardness,
             RationalFromFloat(props.mining_time),
             ingredients,
