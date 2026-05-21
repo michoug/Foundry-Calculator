@@ -31,7 +31,7 @@ var MODIFICATIONS = {
     "latest": new Modification("Latest", "latest.json", false, [1024, 1024]),
 }
 
-var DEFAULT_MODIFICATION = "0.6.0.22572"
+var DEFAULT_MODIFICATION = "latest"
 
 function addOverrideOptions(version) {
     var tag = "local-" + version.replace(/\./g, "-")
@@ -228,15 +228,18 @@ function setMinimumAssembler(min) {
 // crusher
 
 // Assigned during FactorySpec initialization.
-var DEFAULT_CRUSHER = 'Crusher II'
+var DEFAULT_CRUSHER = null
 
 function renderCrusher(settings) {
-    var crusherName = DEFAULT_CRUSHER
+    var crusherName = spec.crusher.name
     if ("crusher" in settings) {
         crusherName = settings.crusher
+    } else if (DEFAULT_CRUSHER !== null) {
+        crusherName = DEFAULT_CRUSHER
     }
     if (crusherName !== spec.crusher.name) {
         spec.setCrusher(crusherName)
+        crusherName = spec.crusher.name
     }
     var oldNode = document.getElementById("crusher")
     var cell = oldNode.parentNode
@@ -258,15 +261,18 @@ function renderCrusher(settings) {
 // smelter
 
 // Assigned during FactorySpec initialization.
-var DEFAULT_SMELTER = 'Advanced Smelter'
+var DEFAULT_SMELTER = null
 
 function renderSmelter(settings) {
-    var smelterName = DEFAULT_SMELTER
+    var smelterName = spec.smelter.name
     if ("smelter" in settings) {
         smelterName = settings.smelter
+    } else if (DEFAULT_SMELTER !== null) {
+        smelterName = DEFAULT_SMELTER
     }
     if (smelterName !== spec.smelter.name) {
         spec.setSmelter(smelterName)
+        smelterName = spec.smelter.name
     }
     var oldNode = document.getElementById("smelter")
     var cell = oldNode.parentNode
