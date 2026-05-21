@@ -44,6 +44,18 @@ Item.prototype = {
         }
         var recipe = this.recipes[0]
         var gives = recipe.gives(this, spec)
+        var selfIngredient = zero
+        for (var i = 0; i < recipe.ingredients.length; i++) {
+            var ing = recipe.ingredients[i]
+            if (ing.item.name === this.name) {
+                selfIngredient = selfIngredient.add(ing.amount)
+            }
+        }
+        gives = gives.sub(selfIngredient)
+        if (!zero.less(gives)) {
+            totals.addUnfinished(this.name, rate)
+            return totals
+        }
         rate = rate.div(gives)
         totals.add(recipe.name, rate)
         if (ignore[recipe.name]) {
@@ -52,6 +64,9 @@ Item.prototype = {
         var ingredients = recipe.ingredients.concat(recipe.fuelIngredient(spec))
         for (var i=0; i < ingredients.length; i++) {
             var ing = ingredients[i]
+            if (ing.item.name === this.name) {
+                continue
+            }
             var subTotals = ing.item.produce(rate.mul(ing.amount), ignore, spec)
             totals.combine(subTotals)
         }
