@@ -8434,7 +8434,12 @@
             "icon_col": 4,
             "icon_identifier": "olumite_gas",
             "icon_row": 12,
-            "ingredients": [],
+            "ingredients": [
+                {
+                    "amount": 100.0,
+                    "name": "_base_olumite"
+                }
+            ],
             "localized_name": {
                 "en": "Olumite Refining: Olumite Gas"
             },
@@ -8454,7 +8459,12 @@
             "icon_col": 9,
             "icon_identifier": "ldo",
             "icon_row": 8,
-            "ingredients": [],
+            "ingredients": [
+                {
+                    "amount": 100.0,
+                    "name": "_base_olumite"
+                }
+            ],
             "localized_name": {
                 "en": "Olumite Refining: Low Density Olumite"
             },
@@ -8474,7 +8484,12 @@
             "icon_col": 14,
             "icon_identifier": "liquid_polymer",
             "icon_row": 8,
-            "ingredients": [],
+            "ingredients": [
+                {
+                    "amount": 100.0,
+                    "name": "_base_olumite"
+                }
+            ],
             "localized_name": {
                 "en": "Olumite Refining: Liquid Polymer"
             },
@@ -11365,7 +11380,20 @@
             "icon_col": 2,
             "icon_identifier": "fracking_liquid",
             "icon_row": 7,
-            "ingredients": [],
+            "ingredients": [
+                {
+                    "amount": 30.0,
+                    "name": "_base_air"
+                },
+                {
+                    "amount": 10.0,
+                    "name": "_base_olumite_gas"
+                },
+                {
+                    "amount": 60.0,
+                    "name": "_base_water"
+                }
+            ],
             "localized_name": {
                 "en": "Fracking Liquid"
             },
@@ -12242,7 +12270,12 @@
             "icon_col": 13,
             "icon_identifier": "liquid_fuel",
             "icon_row": 8,
-            "ingredients": [],
+            "ingredients": [
+                {
+                    "amount": 50.0,
+                    "name": "_base_ldo"
+                }
+            ],
             "localized_name": {
                 "en": "Liquid Fuel"
             },
@@ -14132,7 +14165,20 @@
             "icon_col": 2,
             "icon_identifier": "paint",
             "icon_row": 13,
-            "ingredients": [],
+            "ingredients": [
+                {
+                    "amount": 50.0,
+                    "name": "_base_ldo"
+                },
+                {
+                    "amount": 50.0,
+                    "name": "_base_olumite_gas"
+                },
+                {
+                    "amount": 50.0,
+                    "name": "_base_water"
+                }
+            ],
             "localized_name": {
                 "en": "Paint"
             },
@@ -14338,7 +14384,12 @@
             "icon_col": 9,
             "icon_identifier": "polymer_board",
             "icon_row": 13,
-            "ingredients": [],
+            "ingredients": [
+                {
+                    "amount": 5.0,
+                    "name": "_base_liquid_polymer"
+                }
+            ],
             "localized_name": {
                 "en": "Polymer Board"
             },
@@ -16290,7 +16341,12 @@
             "icon_col": 15,
             "icon_identifier": "rods",
             "icon_row": 14,
-            "ingredients": [],
+            "ingredients": [
+                {
+                    "amount": 15.0,
+                    "name": "_base_molten_te"
+                }
+            ],
             "localized_name": {
                 "en": "Technum Rods (Tier 3)"
             },
@@ -16345,7 +16401,12 @@
             "icon_col": 1,
             "icon_identifier": "telluxite_wafer",
             "icon_row": 17,
-            "ingredients": [],
+            "ingredients": [
+                {
+                    "amount": 400.0,
+                    "name": "_base_liquid_telluxite"
+                }
+            ],
             "localized_name": {
                 "en": "Telluxite Wafer"
             },
@@ -16846,7 +16907,12 @@
             "icon_col": 1,
             "icon_identifier": "xf_plate",
             "icon_row": 18,
-            "ingredients": [],
+            "ingredients": [
+                {
+                    "amount": 15.0,
+                    "name": "_base_molten_xf"
+                }
+            ],
             "localized_name": {
                 "en": "Xenoferrite Plates (Tier 3)"
             },
