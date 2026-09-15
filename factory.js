@@ -479,12 +479,13 @@ FactorySpec.prototype = {
         }
     },
     useSmelter: function(recipe) {
-        if (Array.isArray(recipe.category)) {
-            for (var i in recipe.category) {
-                return recipe.category[i] == "smelter" || recipe.category[i] == "advanced_smelter"
+        var categories = Array.isArray(recipe.category) ? recipe.category : [recipe.category]
+        for (var i = 0; i < categories.length; i++) {
+            if (categories[i] == "smelter" || categories[i] == "advanced_smelter") {
+                return true
             }
         }
-        return recipe.category == "smelter" || recipe.category == "advanced_smelter"
+        return false
     },
     setMetallurgy: function(name) {
         for (var i = 0; i < this.tiers.length; i++) {
@@ -497,6 +498,35 @@ FactorySpec.prototype = {
                 return
             }
         }
+    },
+    // recipe.category may be a single category name or an array of tags
+    // (e.g. ["casting_machine", "heavy_caster"]). A plain object-key
+    // lookup on an array only works by luck for single-element arrays, so
+    // union the factories registered under every tag instead.
+    getFactoriesForCategory: function(category) {
+        if (!Array.isArray(category)) {
+            return this.factories[category] || null
+        }
+        var seen = {}
+        var result = []
+        for (var i = 0; i < category.length; i++) {
+            var factories = this.factories[category[i]]
+            if (!factories) {
+                continue
+            }
+            for (var j = 0; j < factories.length; j++) {
+                var factoryDef = factories[j]
+                if (!seen[factoryDef.name]) {
+                    seen[factoryDef.name] = true
+                    result.push(factoryDef)
+                }
+            }
+        }
+        if (result.length == 0) {
+            return null
+        }
+        result.sort(compareFactories)
+        return result
     },
     getFactoryDef: function(recipe) {
         if (this.useCrusher(recipe)) {
@@ -517,7 +547,7 @@ FactorySpec.prototype = {
             }
             return this.smelter
         }
-        var factories = this.factories[recipe.category]
+        var factories = this.getFactoriesForCategory(recipe.category)
         if (!factories) {
             return null
         }

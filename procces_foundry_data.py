@@ -104,7 +104,7 @@ def parseMonoBehaviour() -> dict:
     parsed_data['items'] = {}
     parsed_data['recipes'] = {}
     for root, dirs, files in os.walk(destination_folder):
-        path = root[len(destination_folder) + 1:]
+        path = root[len(destination_folder) + 1:].replace(os.sep, "/")
         if path.lower().startswith("Assets/FoundryTemplates/Items".lower()):
             for file in files:
                 parsed_data['items'].update(parseItems(path, file))
@@ -112,7 +112,7 @@ def parseMonoBehaviour() -> dict:
             for file in files:
                 parsed_data['items'].update(parseLiquid(path, file))
     for root, dirs, files in os.walk(destination_folder):
-        path = root[len(destination_folder) + 1:]
+        path = root[len(destination_folder) + 1:].replace(os.sep, "/")
         if path.lower().startswith("Assets/FoundryTemplates/CraftingRecipes/".lower()):
             for file in files:
                 parsed_data['recipes'].update(parseRecipes(parsed_data, path, file))
@@ -152,6 +152,14 @@ def parseRecipes(parsed_data : dict, path: str, file: str) -> dict:
                     ingredient.pop('percentage_str')
                 if 'identifier' in ingredient:
                     ingredient['name'] = ingredient.pop('identifier')
+            # Fluid/liquid ingredients (e.g. molten metal fed into a casting
+            # machine) live in a separate "elemental" list keyed by
+            # amount_str rather than amount/percentage_str.
+            for ingredient in json_data.get("inputElemental_data", []):
+                recipe_data['ingredients'].append({
+                    "name": ingredient["identifier"],
+                    "amount": float(ingredient.get("amount_str", 0)),
+                })
 
             recipe_data['results'] = json_data.get("output_data", [])
             # Change the "indentifier" to the "name"
@@ -163,6 +171,15 @@ def parseRecipes(parsed_data : dict, path: str, file: str) -> dict:
                 if result['name'] not in parsed_data['items']:
                     print(f"Warning: {result['name']} not found in items. Skipping result.")
                     return {}
+            # Fluid/liquid results, same "elemental" list as above.
+            for result in json_data.get("outputElemental_data", []):
+                if result["identifier"] not in parsed_data['items']:
+                    print(f"Warning: {result['identifier']} not found in items. Skipping result.")
+                    continue
+                recipe_data['results'].append({
+                    "name": result["identifier"],
+                    "amount": float(result.get("amount_str", 0)),
+                })
             recipe_data['result'] = json_data.get("result", {})
             
     except Exception as e:
@@ -527,7 +544,7 @@ def getMachines(parsed_data) -> dict:
     """
     machines = {}
     for root, dirs, files in os.walk(destination_folder):
-        path = root[len(destination_folder) + 1:]
+        path = root[len(destination_folder) + 1:].replace(os.sep, "/")
         if path.lower().startswith("assets/foundrytemplates/buildableobjects".lower()):
             for file in files: 
                 machines.update(getMachinesFromFile(path, file, machines, parsed_data))
@@ -625,7 +642,12 @@ def addSprites(file_path, parsed_data, sheet_prefix: str, write_sprites: bool):
         with open("sprite_sheet.png", "rb") as f:
             sprite_sheet_hash = hashlib.md5(f.read()).hexdigest()[:5]
         print(f"Sprite sheet hash: {sprite_sheet_hash}")
-        os.rename("sprite_sheet.png", f"{sheet_prefix}-{sprite_sheet_hash}.png")
+        dest_path = f"{sheet_prefix}-{sprite_sheet_hash}.png"
+        # os.rename() raises on Windows (unlike POSIX) if dest already
+        # exists, e.g. when re-running with an unchanged sprite sheet.
+        if os.path.exists(dest_path):
+            os.remove(dest_path)
+        os.rename("sprite_sheet.png", dest_path)
         parsed_data['sprites']['hash'] = sprite_sheet_hash
         parsed_data['sprites']['width'] = sprite_sheet.width
         
